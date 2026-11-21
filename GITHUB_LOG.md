@@ -1,12 +1,15 @@
 # GitHub Activity Log – יומן מעקב
 
 כל פקודה שרצה מול Git/GitHub נרשמת כאן, מהחדשה לישנה.
-ריפו: `yigaldf/aido-bakery-lesson-2` · ענף עבודה: `claude/affectionate-johnson-wtufsy`
+ריפו: `yigaldf/aido-bakery-lesson-2` · ענף עבודה: `claude/affectionate-johnson-wtufsy` · ענף פרסום: `gh-pages`
 
 | # | תאריך ושעה | פקודה | מטרה | תוצאה |
 |---|-----------|-------|------|-------|
+| 11 | 2026-11-21 18:18 | `git push origin claude/affectionate-johnson-wtufsy:gh-pages` | יצירת הענף `gh-pages`, שממנו GitHub Pages מפרסם את האתר | ✅ |
+| 10 | 2026-11-21 18:18 | `git push -u origin claude/affectionate-johnson-wtufsy` | דחיפת השינויים לענף העבודה | ✅ |
+| 9 | 2026-11-21 18:18 | `git add .nojekyll SPEC.md README.md GITHUB_LOG.md` + `git commit -m "Prepare GitHub Pages publishing"` | הכנה לפרסום: קובץ `.nojekyll` ועדכון מסמכים | ✅ |
 | 8 | 2026-11-21 18:13 | `git push -u origin claude/affectionate-johnson-wtufsy` | דחיפת המערכת והמסמכים המעודכנים | ✅ |
-| 7 | 2026-11-21 18:13 | `git add index.html styles.css app.js SPEC.md README.md GITHUB_LOG.md` + `git commit -m "Build bakery sales dashboard POC"` | בניית המערכת: 4 מסכים, נתוני דמו, דוחות, CSV | ✅ |
+| 7 | 2026-11-21 18:13 | `git add index.html styles.css app.js SPEC.md README.md GITHUB_LOG.md` + `git commit -m "Build bakery sales dashboard POC"` | בניית המערכת: 4 מסכים, נתוני דמו, דוחות, CSV | ✅ `26fecc5` |
 | 6 | 2026-11-21 18:03 | `git push -u origin claude/affectionate-johnson-wtufsy` | דחיפת ה-README והעדכונים | ✅ |
 | 5 | 2026-11-21 18:03 | `git add README.md CLAUDE.md SPEC.md GITHUB_LOG.md` + `git commit -m "Add customer README handbook and update rule"` | יצירת README ללקוח וכלל עדכון קבוע | ✅ `bce19e3` |
 | 4 | 2026-11-21 17:59 | `git push -u origin claude/affectionate-johnson-wtufsy` | דחיפת יומן המעקב, CLAUDE.md ועדכון ה-spec | ✅ |
