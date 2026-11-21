@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#9A3A1E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="המאפייה">
+  <title>דשבורד מכירות – המאפייה</title>
+  <link rel="icon" type="image/webp" href="assets/logo.webp">
+  <link rel="apple-touch-icon" href="assets/logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body data-screen="home">
+
+  <!-- מסך פתיחה -->
+  <div class="splash" id="splash" aria-hidden="true">
+    <img src="assets/logo.webp" alt="">
+    <div class="splash-title">ניהול מכירות</div>
+  </div>
+
+  <!-- כותרת עליונה -->
+  <header class="app-header">
+    <img src="assets/logo.webp" alt="לוגו המאפייה" class="header-logo">
+    <div class="brand">
+      <div class="brand-name">המאפייה</div>
+      <div class="brand-date" id="today-date"></div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- 🏠 בית -->
+    <section id="screen-home" class="screen" aria-labelledby="t-home">
+      <h1 class="screen-title" id="t-home">🏠 היום במאפייה</h1>
+
+      <div class="kpis">
+        <div class="kpi kpi-main">
+          <div class="kpi-label">💰 הכנסות היום</div>
+          <div class="kpi-value" id="kpi-revenue">₪0</div>
+          <div class="delta" id="delta-revenue"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">🧾 מכירות</div>
+          <div class="kpi-value" id="kpi-count">0</div>
+          <div class="delta" id="delta-count"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">🛍️ ממוצע לעסקה</div>
+          <div class="kpi-value" id="kpi-avg">₪0</div>
+          <div class="delta" id="delta-avg"></div>
+        </div>
+      </div>
+      <p class="hint">ההשוואה היא לאתמול, עד אותה שעה</p>
+
+      <div class="two-cols">
+        <div class="card">
+          <h2 class="section-title">🏆 הנמכרים היום</h2>
+          <div id="top-products"></div>
+        </div>
+        <div class="card">
+          <h2 class="section-title">🕒 מכירות אחרונות</h2>
+          <p class="hint">לחיצה על מכירה מאפשרת לבטל אותה</p>
+          <div id="recent-sales"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ➕ מכירה -->
+    <section id="screen-pos" class="screen" aria-labelledby="t-pos">
+      <h1 class="screen-title" id="t-pos">🛒 מכירה חדשה</h1>
+      <p class="hint">לחצו על מוצר כדי להוסיף אותו לעגלה</p>
+      <div class="product-grid" id="pos-grid"></div>
+    </section>
+
+    <!-- 🥐 מוצרים -->
+    <section id="screen-products" class="screen" aria-labelledby="t-products">
+      <h1 class="screen-title" id="t-products">🥐 מוצרים</h1>
+      <button type="button" class="btn btn-primary btn-block" id="add-product-btn">➕ הוסף מוצר</button>
+      <div class="product-list" id="product-list"></div>
+    </section>
+
+    <!-- 📊 דוחות -->
+    <section id="screen-reports" class="screen" aria-labelledby="t-reports">
+      <h1 class="screen-title" id="t-reports">📊 דוחות</h1>
+
+      <div class="seg" role="group" aria-label="טווח זמן">
+        <button type="button" class="btn seg-btn" data-range="today" aria-pressed="true">היום</button>
+        <button type="button" class="btn seg-btn" data-range="7" aria-pressed="false">7 ימים</button>
+        <button type="button" class="btn seg-btn" data-range="30" aria-pressed="false">30 יום</button>
+      </div>
+
+      <div class="kpis kpis-3">
+        <div class="kpi"><div class="kpi-label">💰 הכנסות</div><div class="kpi-value" id="r-revenue">₪0</div></div>
+        <div class="kpi"><div class="kpi-label">🧾 מכירות</div><div class="kpi-value" id="r-count">0</div></div>
+        <div class="kpi"><div class="kpi-label">🛍️ ממוצע</div><div class="kpi-value" id="r-avg">₪0</div></div>
+      </div>
+
+      <div class="two-cols">
+        <div class="card">
+          <h2 class="section-title" id="bar-title">📈 הכנסות לפי שעה</h2>
+          <div class="chart-box"><canvas id="chart-revenue" role="img" aria-label="גרף הכנסות"></canvas></div>
+          <p class="chart-fallback empty" hidden>הגרפים לא נטענו. בדקו את החיבור לאינטרנט.</p>
+        </div>
+        <div class="card">
+          <h2 class="section-title">🥧 לפי קטגוריה</h2>
+          <div class="chart-box"><canvas id="chart-category" role="img" aria-label="גרף הכנסות לפי קטגוריה"></canvas></div>
+          <p class="chart-fallback empty" hidden>הגרפים לא נטענו. בדקו את החיבור לאינטרנט.</p>
+          <p class="empty" id="category-empty" hidden>אין מכירות בטווח הזה</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">🧾 לפי מוצר</h2>
+        <div class="table-wrap">
+          <table class="report-table">
+            <thead><tr><th scope="col">מוצר</th><th scope="col" class="num">כמות</th><th scope="col" class="num">הכנסה</th></tr></thead>
+            <tbody id="report-rows"></tbody>
+            <tfoot id="report-foot"></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="report-actions">
+        <button type="button" class="btn btn-primary btn-block" id="export-btn">⬇ ייצוא CSV</button>
+        <button type="button" class="btn btn-secondary btn-block" id="reset-btn">🔄 איפוס נתוני דמו</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- כפתור צף: מכירה חדשה -->
+  <a href="#pos" class="fab" aria-label="מכירה חדשה"><span aria-hidden="true">+</span></a>
+
+  <!-- עגלה (מסך מכירה) -->
+  <div class="cart" id="cart" hidden>
+    <button type="button" class="cart-summary" id="cart-toggle" aria-expanded="false" aria-controls="cart-items">
+      <span class="cart-count" id="cart-count"></span>
+      <span class="cart-total" id="cart-total"></span>
+      <span class="chev" aria-hidden="true">▲</span>
+    </button>
+    <div class="cart-items" id="cart-items" hidden></div>
+    <div class="cart-actions">
+      <button type="button" class="pay-btn" data-pay="cash" aria-pressed="true"><span class="pay-icon" aria-hidden="true">💵</span>מזומן</button>
+      <button type="button" class="pay-btn" data-pay="card" aria-pressed="false"><span class="pay-icon" aria-hidden="true">💳</span>אשראי</button>
+      <button type="button" class="btn btn-success confirm-btn" id="checkout-btn">✔ אישור מכירה</button>
+    </div>
+  </div>
+
+  <!-- ניווט -->
+  <nav class="bottom-nav" aria-label="ניווט ראשי">
+    <a href="#home" class="nav-btn" data-screen="home"><span class="icon" aria-hidden="true">🏠</span><span>בית</span></a>
+    <a href="#pos" class="nav-btn" data-screen="pos"><span class="icon" aria-hidden="true">🛒</span><span>מכירה</span></a>
+    <a href="#products" class="nav-btn" data-screen="products"><span class="icon" aria-hidden="true">🥐</span><span>מוצרים</span></a>
+    <a href="#reports" class="nav-btn" data-screen="reports"><span class="icon" aria-hidden="true">📊</span><span>דוחות</span></a>
+  </nav>
+
+  <!-- טופס מוצר -->
+  <dialog id="product-dialog" class="modal modal-full" aria-labelledby="product-dialog-title">
+    <form id="product-form" class="modal-form" novalidate>
+      <header class="modal-header">
+        <h2 id="product-dialog-title">מוצר חדש</h2>
+        <button type="button" class="icon-btn" id="product-close" aria-label="סגירה">✕</button>
+      </header>
+      <div class="modal-body">
+        <label class="field"><span>שם המוצר</span>
+          <input id="f-name" maxlength="30" autocomplete="off" required>
+        </label>
+        <label class="field"><span>מחיר (₪)</span>
+          <input id="f-price" type="number" inputmode="decimal" min="0" step="0.5" required>
+        </label>
+        <label class="field"><span>קטגוריה</span>
+          <select id="f-category"></select>
+        </label>
+        <fieldset class="field">
+          <legend>אייקון</legend>
+          <div class="emoji-grid" id="f-emoji"></div>
+        </fieldset>
+        <p class="form-error" id="f-error" role="alert" hidden></p>
+      </div>
+      <footer class="modal-footer">
+        <button type="submit" class="btn btn-primary">💾 שמירה</button>
+        <button type="button" class="btn btn-secondary" id="product-cancel">ביטול</button>
+        <button type="button" class="btn btn-danger" id="product-delete" hidden>🗑 מחיקה</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- חלון אישור -->
+  <dialog id="confirm-dialog" class="modal modal-small" aria-labelledby="confirm-msg">
+    <form method="dialog" class="confirm-form">
+      <p id="confirm-msg"></p>
+      <div class="confirm-actions">
+        <button value="ok" class="btn btn-danger" id="confirm-ok">אישור</button>
+        <button value="cancel" class="btn btn-secondary">ביטול</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
