@@ -11,5 +11,11 @@ Any change to project settings or decisions (tech stack, colors, design tokens, 
 - Update the relevant section.
 - Add a row to the "היסטוריית שינויים" (change history) table at the end of `SPEC.md`.
 
-## 3. Language
+## 3. README is the customer handbook
+`README.md` (Hebrew) explains the system to the customer: what it does, quick start, a usage handbook per screen, FAQ, the technology behind it, project structure, design, how it was built and how we work, known limitations.
+- Update it after **every** change to the project (features, files, stack, design, status, workflow), in the same commit.
+- Keep the build-stage status table accurate. Never describe a feature as working before it is built.
+- Add a row to its "היסטוריית עדכונים" table.
+
+## 4. Language
 The user writes in Hebrew; docs and UI are in Hebrew (RTL).
